@@ -7,3 +7,20 @@
 class pgsql {
 
 }
+
+class pgsql {
+    package { 'postgresql':
+        ensure => present,
+        category => $operatingsystem ? {
+            gentoo => 'dev-db',
+            default => '',
+        }
+    }
+
+    service{'postgresql':
+        enable => true,
+        ensure => running,
+        require => Package[postgresql],
+    }
+}
+
