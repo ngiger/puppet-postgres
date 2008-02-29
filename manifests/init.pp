@@ -4,7 +4,7 @@
 
 # modules_dir { "pgsql": }
 
-class pgsql {
+class pgsql::server {
     package { 'postgresql':
         ensure => present,
         category => $operatingsystem ? {
