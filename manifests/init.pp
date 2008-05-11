@@ -19,6 +19,8 @@ class pgsql::server {
         require => Package[postgresql],
     }
 
-    include munin::plugins::postgres
+    if $use_munin {
+        include munin::plugins::postgres
+    }
 }
 
