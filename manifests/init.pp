@@ -1,6 +1,7 @@
 #
 # postgres module
 #
+# Copyright (C) 2007 admin@immerda.ch
 # Copyright 2008, Puzzle ITC
 # Marcel Härry haerry+puppet(at)puzzle.ch
 # Simon Josi josi+puppet(at)puzzle.ch
@@ -13,18 +14,22 @@
 
 # modules_dir { \"postgres\": }
 
-class postgres {
-    include postgres::base
-}
-
-class postgres::base {
-    package{'postgres':
+class pgsql::server {
+    package { 'postgresql':
         ensure => present,
+        category => $operatingsystem ? {
+            gentoo => 'dev-db',
+            default => '',
+        }
     }
-    service{postgres:
-        ensure => running,
+
+    service{'postgresql':
         enable => true,
-        hasstatus => true,
-        require => Package[postgres],
+        ensure => running,
+        require => Package[postgresql],
+    }
+
+    if $use_munin {
+        include munin::plugins::postgres
     }
 }
