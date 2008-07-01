@@ -38,6 +38,11 @@ class postgres::base {
         require => Package[postgresql],
     }
 
+    file{'/etc/cron.d/pgsql_backup.cron':
+        source => "puppet://$server/postgres/backup/pgsql_backup.cron",
+        owner => root, group => 0, mode => 0600;
+    }
+
     if $use_munin {
         include munin::plugins::postgres
     }
