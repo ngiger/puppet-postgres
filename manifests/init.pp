@@ -45,6 +45,30 @@ class postgres::base {
     if $use_munin {
         include munin::plugins::postgres
     }
+    file{'/var/lib/pgsql/data/pg_hba.conf':
+            source => [
+                "puppet://$server/files/postgres/${fqdn}/pg_hba.conf",
+                "puppet://$server/files/postgres/pg_hba.conf",
+                "puppet://$server/postgres/config/pg_hba.conf.${operatingsystem}",
+                "puppet://$server/postgres/config/pg_hba.conf"
+            ],
+            ensure => file,
+            require => Package[postgresql-server],
+            notify => Service[postgresql],
+            owner => postgres, group => potgres, mode => 0600;
+    }
+    file{'/var/lib/pgsql/data/postgresql.conf':
+            source => [
+                "puppet://$server/files/postgres/${fqdn}/postgresql.conf",
+                "puppet://$server/files/postgres/postgresql.conf",
+                "puppet://$server/postgres/config/postgresql.conf.${operatingsystem}",
+                "puppet://$server/postgres/config/postgresql.conf"
+            ],
+            ensure => file,
+            require => Package[postgresql-server],
+            notify => Service[postgresql],
+            owner => postgres, group => potgres, mode => 0600;
+    }
 }
 
 class postgres::gentoo inherits postgres::base {
