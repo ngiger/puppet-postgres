@@ -55,7 +55,7 @@ class postgres::base {
             ensure => file,
             require => Package[postgresql-server],
             notify => Service[postgresql],
-            owner => postgres, group => potgres, mode => 0600;
+            owner => postgres, group => postgres, mode => 0600;
     }
     file{'/var/lib/pgsql/data/postgresql.conf':
             source => [
@@ -67,7 +67,7 @@ class postgres::base {
             ensure => file,
             require => Package[postgresql-server],
             notify => Service[postgresql],
-            owner => postgres, group => potgres, mode => 0600;
+            owner => postgres, group => postgres, mode => 0600;
     }
 }
 
