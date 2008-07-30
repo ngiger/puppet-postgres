@@ -38,8 +38,16 @@ class postgres::base {
         require => Package[postgresql],
     }
 
+    # wen want to be sure that this exists
+    file{'/var/lib/pgsql/backups':
+        ensure => directory,
+        require => Package['postgresql'],
+        owner => postgres, group => postgres, mode => 0700;
+    }
+
     file{'/etc/cron.d/pgsql_backup.cron':
         source => "puppet://$server/postgres/backup/pgsql_backup.cron",
+        require => File['/var/lib/pgsql/backups'],
         owner => root, group => 0, mode => 0600;
     }
 
