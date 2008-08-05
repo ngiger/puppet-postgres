@@ -2,15 +2,15 @@
 
 class postgres::munin {
     munin::plugin::deploy { 'pg_conn': 
-        source => "puppet://$server/postgres/munin/pg_conn",
+        source => 'postgres/munin/pg_conn',
     }
     munin::plugin::deploy { 'pg__connections': 
         ensure => absent,
-        source => "puppet://$server/postgres/munin/pg__connections",
+        source => 'postgres/munin/pg__connections',
     }
     munin::plugin::deploy { 'pg__locks': 
         ensure => absent,
-        source => "puppet://$server/postgres/munin/pg__locks",
+        source => 'postgres/munin/pg__locks',
     }
 }
 
