@@ -52,7 +52,7 @@ class postgres::base {
     }
 
     if $use_munin {
-        include munin::plugins::postgres
+        include postgres::munin
     }
     file{'/var/lib/pgsql/data/pg_hba.conf':
             source => [
