@@ -59,13 +59,16 @@
 # or via the -i or -h command line switches.
 #
 
-@authcomment@
+ 
+# CAUTION: The default configuration allows any local user to connect
+# # using any PostgreSQL user name, including the superuser, over either
+# # Unix-domain sockets or TCP/IP.  If you are on a multiple-user
+# # machine, the default configuration is probably too liberal for you.
+# # Change it to use something other than "trust" authentication.
 
 # TYPE  DATABASE    USER        CIDR-ADDRESS          METHOD
 
-@remove-line-for-nolocal@# "local" is for Unix domain socket connections only
-@remove-line-for-nolocal@local   all         all                               @authmethod@
+local   all         postgres                          trust
+local   all         all                               password
 # IPv4 local connections:
-host    all         all         127.0.0.1/32          @authmethod@
-# IPv6 local connections:
-host    all         all         ::1/128               @authmethod@
+host    all         all         127.0.0.1/32          password
