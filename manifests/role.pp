@@ -1,7 +1,7 @@
 define postgres::role($ensure, $password = false) {
     $passtext = $password ? {
         false => "",
-        default => "PASSWORD '$password'"
+        default => "ENCRYPTED PASSWORD '$password'"
     }
     case $ensure {
         present: {
