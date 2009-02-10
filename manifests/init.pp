@@ -16,8 +16,6 @@
 # http://github.com/lak/puppet-postgres/tree/master
 #
 
-# modules_dir { \"postgres\": }
-
 class postgres {
     case $operatingsystem {
         gentoo: { include postgres::gentoo } 
@@ -48,6 +46,10 @@ class postgres::base {
     file{'/etc/cron.d/pgsql_backup.cron':
         source => "puppet://$server/postgres/backup/pgsql_backup.cron",
         require => File['/var/lib/pgsql/backups'],
+        owner => root, group => 0, mode => 0600;
+    }
+    file{'/etc/cron.d/pgsql_vacuum.cron':
+        source => "puppet://$server/postgres/maintenance/pgsql_vacuum.cron",
         owner => root, group => 0, mode => 0600;
     }
 
