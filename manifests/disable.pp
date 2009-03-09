@@ -13,7 +13,7 @@ class postgres::base::disable inherits postgres::base {
         enable => false,
     }
 
-    File['/etc/cron.d/pgsql_backup.cron']{
+    File['/etc/cron.d/pgsql_backup.cron', '/etc/cron.d/pgsql_vacuum.cron']{
         ensure => absent,
     }
 
