@@ -3,26 +3,23 @@ define postgres::database($ensure, $owner = false) {
         false => "",
         default => "-O $owner"
     }
-
     case $ensure {
         present: {
-            exec { "Create $name postgres db":
+            exec{"Create $name postgres db":
                 command => "/usr/bin/createdb $ownerstring $name",
                 user => "postgres",
                 unless => "/usr/bin/psql -l | grep '$name  *|'"
             }
         }
-        absent:  {
-            exec { "Remove $name postgres db":
+        absent: {
+            exec{"Remove $name postgres db":
                 command => "/usr/bin/dropdb $name",
                 onlyif => "/usr/bin/psql -l | grep '$name  *|'",
                 user => "postgres"
             }
         }
         default: {
-            fail "Invalid 'ensure' value '$ensure' for postgres::database"
+            fail("Invalid 'ensure' value '$ensure' for postgres::database")
         }
     }
 }
-
-# $Id$

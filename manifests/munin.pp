@@ -1,5 +1,3 @@
-# manifests/munin.pp
-
 class postgres::munin {
     munin::plugin::deploy { 'pg_conn': 
         source => 'postgres/munin/pg_conn',
@@ -13,10 +11,3 @@ class postgres::munin {
         source => 'postgres/munin/pg__locks',
     }
 }
-
-class postgres::munin::disable inherits postgres::munin {
-    Munin::Plugin::Deploy['pg_conn']{
-        ensure => absent,
-    }
-}
-

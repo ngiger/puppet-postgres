@@ -9,20 +9,18 @@ define postgres::role($ensure, $password = false) {
             exec { "Create $name postgres role":
                 command => "/usr/bin/psql -c \"CREATE ROLE $name $passtext LOGIN\"",
                 user => "postgres",
-                unless => "/usr/bin/psql -c '\\du' | grep '^  *$name'"
+                unless => "/usr/bin/psql -c '\\du' | grep '^  *$name'",
             }
         }
-        absent:  {
+        absent: {
             exec { "Remove $name postgres role":
                 command => "/usr/bin/dropeuser $name",
                 user => "postgres",
-                onlyif => "/usr/bin/psql -c '\\du' | grep '$name  *|'"
+                onlyif => "/usr/bin/psql -c '\\du' | grep '$name  *|'",
             }
         }
         default: {
-            fail "Invalid 'ensure' value '$ensure' for postgres::role"
+            fail("Invalid 'ensure' value '$ensure' for postgres::role")
         }
     }
 }
-
-# $Id$
