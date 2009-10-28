@@ -22,4 +22,10 @@ class postgres {
         gentoo: { include postgres::base::gentoo } 
         default: { include postgres::base }
     }
+    if $use_munin {
+        include postgres::munin
+    }
+    if $use_shorewall {
+        include shorewall::rules::postgres
+    }
 }
