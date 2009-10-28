@@ -9,6 +9,7 @@ define postgres::database($ensure, $owner = false) {
                 user => "postgres",
                 unless => "/usr/bin/psql -l | grep '$name  *|'",
                 command => "/usr/bin/createdb $ownerstring $name",
+                require => Service[postgresql],
             }
         }
         absent: {
@@ -16,6 +17,7 @@ define postgres::database($ensure, $owner = false) {
                 user => "postgres",
                 onlyif => "/usr/bin/psql -l | grep '$name  *|'",
                 command => "/usr/bin/dropdb $name",
+                require => Service[postgresql],
             }
         }
         default: {
