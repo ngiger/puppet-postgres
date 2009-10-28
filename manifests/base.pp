@@ -12,7 +12,7 @@ class postgres::base {
     }
     file{'/var/lib/pgsql/backups':
         ensure => directory,
-        require => [ Package[postgresql-server], Service[postgresql-server] ],
+        require => Service[postgresql],
         owner => postgres, group => postgres, mode => 0700;
     }
     file{'/var/lib/pgsql/data/pg_hba.conf':
@@ -23,7 +23,7 @@ class postgres::base {
                 "puppet://$server/postgres/config/pg_hba.conf"
             ],
             notify => Service[postgresql],
-            require => [ Package[postgresql-server], Service[postgresql-server] ],
+            require => Service[postgresql],
             owner => postgres, group => postgres, mode => 0600;
     }
     file{'/var/lib/pgsql/data/postgresql.conf':
@@ -34,7 +34,7 @@ class postgres::base {
                 "puppet://$server/postgres/config/postgresql.conf"
             ],
             notify => Service[postgresql],
-            require => [ Package[postgresql-server], Service[postgresql-server] ],
+            require => Service[postgresql],
             owner => postgres, group => postgres, mode => 0600;
     }
     file{'/etc/cron.d/pgsql_backup.cron':
