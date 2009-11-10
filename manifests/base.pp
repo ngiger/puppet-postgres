@@ -3,17 +3,12 @@ class postgres::base {
 
     package{'postgresql-server':
         ensure => present,
+        before => Service[postgresql],
     }
     service{'postgresql':
         enable => true,
         ensure => running,
         hasstatus => true,
-        require => Package[postgresql-server],
-    }
-    file{'/var/lib/pgsql/backups':
-        ensure => directory,
-        require => Service[postgresql],
-        owner => postgres, group => postgres, mode => 0700;
     }
     file{'/var/lib/pgsql/data/pg_hba.conf':
             source => [
@@ -37,6 +32,11 @@ class postgres::base {
             require => Package[postgresql-server],
             owner => postgres, group => postgres, mode => 0600;
     }
+    file{'/var/lib/pgsql/backups':
+        ensure => directory,
+        require => Package[postgresql-server],
+        owner => postgres, group => postgres, mode => 0700;
+    }
     file{'/etc/cron.d/pgsql_backup.cron':
         source => "puppet://$server/postgres/backup/pgsql_backup.cron",
         require => File['/var/lib/pgsql/backups'],
@@ -44,6 +44,7 @@ class postgres::base {
     }
     file{'/etc/cron.d/pgsql_vacuum.cron':
         source => "puppet://$server/postgres/maintenance/pgsql_vacuum.cron",
+        require => Package[postgresql-server],
         owner => root, group => 0, mode => 0600;
     }
     if $use_munin {
