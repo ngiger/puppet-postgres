@@ -21,17 +21,17 @@ class postgres::base {
 #            require => Package[postgresql-server],
 #            owner => postgres, group => postgres, mode => 0600;
 #    }
-#    file{'/var/lib/pgsql/data/postgresql.conf':
-#            source => [
-#                "puppet://$server/site-postgres/${fqdn}/postgresql.conf",
-#                "puppet://$server/site-postgres/postgresql.conf",
-#                "puppet://$server/postgres/config/postgresql.conf.${operatingsystem}",
-#                "puppet://$server/postgres/config/postgresql.conf"
-#            ],
-#            notify => Service[postgresql],
-#            require => Package[postgresql-server],
-#            owner => postgres, group => postgres, mode => 0600;
-#    }
+    file{'/var/lib/pgsql/data/postgresql.conf':
+            source => [
+                "puppet://$server/site-postgres/${fqdn}/postgresql.conf",
+                "puppet://$server/site-postgres/postgresql.conf",
+                "puppet://$server/postgres/config/postgresql.conf.${operatingsystem}",
+                "puppet://$server/postgres/config/postgresql.conf"
+            ],
+            notify => Service[postgresql],
+            require => Package[postgresql-server],
+            owner => postgres, group => postgres, mode => 0600;
+    }
 #    file{'/var/lib/pgsql/backups':
 #        ensure => directory,
 #        require => Package[postgresql-server],
