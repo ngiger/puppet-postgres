@@ -50,7 +50,7 @@
 					# comma-separated list of addresses;
 					# defaults to 'localhost', '*' = all
 #port = 5432
-#max_connections = 100
+max_connections = 100
 # note: increasing max_connections costs ~400 bytes of shared memory per 
 # connection slot, plus lock space (see max_locks_per_transaction).  You
 # might also need to raise shared_buffers to support more connections.
@@ -90,7 +90,7 @@
 
 # - Memory -
 
-#shared_buffers = 1000			# min 16 or max_connections*2, 8KB each
+shared_buffers = 1000			# min 16 or max_connections*2, 8KB each
 #temp_buffers = 1000			# min 100, 8KB each
 #max_prepared_transactions = 5		# can be 0 or more
 # note: increasing max_prepared_transactions costs ~600 bytes of shared memory
@@ -383,11 +383,11 @@ log_rotation_size = 0			# Automatic rotation of logfiles will
 					# encoding
 
 # These settings are initialized by initdb -- they might be changed
-#lc_messages = 'C'			# locale for system error message 
+lc_messages = 'en_US.UTF-8'			# locale for system error message 
 					# strings
-#lc_monetary = 'C'			# locale for monetary formatting
-#lc_numeric = 'C'			# locale for number formatting
-#lc_time = 'C'				# locale for time formatting
+lc_monetary = 'en_US.UTF-8'			# locale for monetary formatting
+lc_numeric = 'en_US.UTF-8'			# locale for number formatting
+lc_time = 'en_US.UTF-8'				# locale for time formatting
 
 # - Other Defaults -
 
