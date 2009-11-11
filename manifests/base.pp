@@ -21,9 +21,8 @@ class postgres::base {
             "puppet://$server/postgres/config/pg_hba.conf.${operatingsystem}",
             "puppet://$server/postgres/config/pg_hba.conf"
         ],
-        before => Exec[initialize_database],
         notify => Service[postgresql],
-        require => Package[postgresql-server],
+        require => [ Package[postgresql-server], Exec[initialize_database] ],
         owner => postgres, group => postgres, mode => 0600;
     }
     file{'/var/lib/pgsql/data/postgresql.conf':
@@ -33,9 +32,8 @@ class postgres::base {
             "puppet://$server/postgres/config/postgresql.conf.${operatingsystem}",
             "puppet://$server/postgres/config/postgresql.conf"
         ],
-        before => Exec[initialize_database],
         notify => Service[postgresql],
-        require => Package[postgresql-server],
+        require => [ Package[postgresql-server], Exec[initialize_database] ],
         owner => postgres, group => postgres, mode => 0600;
     }
     file{'/var/lib/pgsql/backups':
