@@ -10,8 +10,8 @@ class postgres::base {
         hasstatus => true,
         require => Package[postgresql-server],
         before => [
-            File[/var/lib/pgsql/data/pg_hba.conf], 
-            File[/var/lib/pgsql/data/postgresql.conf]
+            File['/var/lib/pgsql/data/pg_hba.conf'], 
+            File['/var/lib/pgsql/data/postgresql.conf']
         ],
     }
     file{'/var/lib/pgsql/data/pg_hba.conf':
