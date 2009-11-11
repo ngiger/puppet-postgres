@@ -9,6 +9,9 @@ class postgres::base {
         ensure => running,
         hasstatus => true,
         require => Package[postgresql-server],
+    }
+    exec{'initialize_database':
+        command => "/etc/init.d/postgresql start",
         before => [
             File['/var/lib/pgsql/data/pg_hba.conf'], 
             File['/var/lib/pgsql/data/postgresql.conf']
