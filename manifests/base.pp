@@ -11,22 +11,13 @@ class postgres::base {
         require => Package[postgresql-server],
     }
     exec{'initialize_database':
-        command => "/etc/init.d/postgresql start",
+        command => '/etc/init.d/postgresql start',
+        creates => '/var/lib/pgsql/data/postgresql.conf',
+        require => Package[postgresql-server],
         before => [
             File['/var/lib/pgsql/data/pg_hba.conf'], 
             File['/var/lib/pgsql/data/postgresql.conf']
         ],
-    }
-    file{'/var/lib/pgsql/data/pg_hba.conf':
-        source => [
-            "puppet://$server/site-postgres/${fqdn}/pg_hba.conf",
-            "puppet://$server/site-postgres/pg_hba.conf",
-            "puppet://$server/postgres/config/pg_hba.conf.${operatingsystem}",
-            "puppet://$server/postgres/config/pg_hba.conf"
-        ],
-        notify => Service[postgresql],
-        require => Package[postgresql-server],
-        owner => postgres, group => postgres, mode => 0600;
     }
     file{'/var/lib/pgsql/data/postgresql.conf':
         source => [
@@ -34,6 +25,17 @@ class postgres::base {
             "puppet://$server/site-postgres/postgresql.conf",
             "puppet://$server/postgres/config/postgresql.conf.${operatingsystem}",
             "puppet://$server/postgres/config/postgresql.conf"
+        ],
+        notify => Service[postgresql],
+        require => Package[postgresql-server],
+        owner => postgres, group => postgres, mode => 0600;
+    }
+    file{'/var/lib/pgsql/data/pg_hba.conf':
+        source => [
+            "puppet://$server/site-postgres/${fqdn}/pg_hba.conf",
+            "puppet://$server/site-postgres/pg_hba.conf",
+            "puppet://$server/postgres/config/pg_hba.conf.${operatingsystem}",
+            "puppet://$server/postgres/config/pg_hba.conf"
         ],
         notify => Service[postgresql],
         require => Package[postgresql-server],
