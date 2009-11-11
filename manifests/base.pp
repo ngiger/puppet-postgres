@@ -9,10 +9,10 @@ class postgres::base {
         ensure => running,
         hasstatus => true,
         require => Package[postgresql-server],
-    }
-    exec{'initialize_database':
-        command => "/etc/init.d/postgresql start",
-        refreshonly => true,
+        before => [
+            File[/var/lib/pgsql/data/pg_hba.conf], 
+            File[/var/lib/pgsql/data/postgresql.conf]
+        ],
     }
     file{'/var/lib/pgsql/data/pg_hba.conf':
         source => [
@@ -22,7 +22,7 @@ class postgres::base {
             "puppet://$server/postgres/config/pg_hba.conf"
         ],
         notify => Service[postgresql],
-        require => [ Package[postgresql-server], Exec[initialize_database] ],
+        require => Package[postgresql-server],
         owner => postgres, group => postgres, mode => 0600;
     }
     file{'/var/lib/pgsql/data/postgresql.conf':
@@ -33,7 +33,7 @@ class postgres::base {
             "puppet://$server/postgres/config/postgresql.conf"
         ],
         notify => Service[postgresql],
-        require => [ Package[postgresql-server], Exec[initialize_database] ],
+        require => Package[postgresql-server],
         owner => postgres, group => postgres, mode => 0600;
     }
     file{'/var/lib/pgsql/backups':
