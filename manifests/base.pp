@@ -10,8 +10,8 @@ class postgres::base {
         hasstatus => true,
         require => Package[postgresql-server],
     }
-    exec{'initialize_database':
-        command => '/etc/init.d/postgresql start',
+    exec{'initialize_postgres_database':
+        command => '/etc/init.d/postgresql start; /etc/init.d/postgresql stop',
         creates => '/var/lib/pgsql/data/postgresql.conf',
         require => Package[postgresql-server],
         before => [
