@@ -1,4 +1,4 @@
-class postgres::base {
+class postgres::server {
     include postgres::client
 
     package{'postgresql-server':

@@ -1,4 +1,4 @@
-class postgres::disable inherits postgres::base {
+class postgres::disable inherits postgres::server {
     Service['postgresql']{
         ensure => stopped,
         enable => false,

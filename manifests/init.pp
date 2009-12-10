@@ -18,9 +18,9 @@
 
 class postgres {
     case $operatingsystem {
-        centos: { include postgres::base::centos } 
-        gentoo: { include postgres::base::gentoo } 
-        default: { include postgres::base }
+        centos: { include postgres::server::centos } 
+        gentoo: { include postgres::server::gentoo } 
+        default: { include postgres::server }
     }
     if $use_munin {
         include postgres::munin
