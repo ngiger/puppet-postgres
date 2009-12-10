@@ -56,7 +56,4 @@ class postgres::base {
         require => Package[postgresql-server],
         owner => root, group => 0, mode => 0600;
     }
-    if $use_munin {
-        include postgres::munin
-    }
 }
