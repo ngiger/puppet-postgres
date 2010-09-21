@@ -1,6 +1,6 @@
 define postgres::admin_role(
-    $ensure = present,
-    $password
+  $ensure = present,
+  $password
 ){
   postgres::role{$name:
     password => $password,

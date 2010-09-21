@@ -17,15 +17,15 @@
 #
 
 class postgres {
-    case $operatingsystem {
-        centos: { include postgres::server::centos } 
-        gentoo: { include postgres::server::gentoo } 
-        default: { include postgres::server }
-    }
-    if $use_munin {
-        include postgres::munin
-    }
-    if $use_shorewall {
-        include shorewall::rules::postgres
-    }
+  case $operatingsystem {
+    centos: { include postgres::server::centos } 
+    gentoo: { include postgres::server::gentoo } 
+    default: { include postgres::server }
+  }
+  if $use_munin {
+    include postgres::munin
+  }
+  if $use_shorewall {
+    include shorewall::rules::postgres
+  }
 }

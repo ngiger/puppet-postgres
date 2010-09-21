@@ -1,5 +1,5 @@
 class postgres::devel{
-    package{'postgresql-devel':
-        ensure => present,
-    }
+  package{'postgresql-devel':
+    ensure => present,
+  }
 }
