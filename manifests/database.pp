@@ -25,3 +25,24 @@ define postgres::database($ensure, $owner = false) {
     }
   }
 }
+    # Xinetd::File['git']{
+    #  source => "puppet:///modules/git/xinetd.d/git.disabled"
+    #}
+
+$postgres_cfg_path = "/files/etc/postgresql/8.4/main/pg_hba.conf"
+ 
+#define postgres::database_allow($ensure, $type="host", $database="all", $user="all", $address="::1/128", $method="md5") {
+#  augeas{ "$postgres_cfg_path":
+#      context => "$postgres_cfg_path",
+#	context => "/files/etc/postgresql/8.4/main/pg_hba.conf",
+#      changes => [
+#       "set \"*[database = '$database' and user = '$user'and type = '$type']/type\" $type",
+#       "set \"*[database = '$database' and user = '$user'and type = '$type']/database\" $database",
+#       "set \"*[database = '$database' and user = '$user'and type = '$type']/user\" $user",
+#       "set \"*[database = '$database' and user = '$user'and type = '$type']/address\" $address",
+#       "set \"*[database = '$database' and user = '$user'and type = '$type']/method\" $method",
+#      ],
+#    #  require => Package["augeas-lenses"],
+#     onlyif => "match  \"*[database = '$database' and user = '$user'and type = '$type']/method\" size > 0",
+#    }
+# }
